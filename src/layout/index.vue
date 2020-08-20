@@ -2,17 +2,20 @@
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
-    <div :class="{hasTagsView:needTagsView}" class="main-container">
-      <div :class="{'fixed-header':fixedHeader}">
+    <div :class="{hasTagsView:false}" class="main-container">
+      <div :class="{'fixed-header':true}">
         <navbar />
       </div>
       <app-main />
+      <div class="copyright">
+        <div>关于我们 用户协议 分校加盟 公益频道</div>
+        <div>Copyright©深圳青豆教育科技有限公司 粤ICP备15077651号 工商网监</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import RightPanel from '@/components/RightPanel'
 import { AppMain, Navbar, Sidebar } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
@@ -22,17 +25,15 @@ export default {
   components: {
     AppMain,
     Navbar,
-    RightPanel,
     Sidebar
   },
   mixins: [ResizeMixin],
   computed: {
     ...mapState({
       sidebar: state => state.app.sidebar,
-      device: state => state.app.device,
-      showSettings: state => state.settings.showSettings,
-      needTagsView: state => state.settings.tagsView,
-      fixedHeader: state => state.settings.fixedHeader
+      device: state => state.app.device
+      // needTagsView: state => state.settings.tagsView,
+      // fixedHeader: state => state.settings.fixedHeader
     }),
     classObj() {
       return {
@@ -92,5 +93,13 @@ export default {
 
   .mobile .fixed-header {
     width: 100%;
+  }
+
+  .copyright {
+    height: 65px;
+    padding: 10px;
+    background: #e6e6e6;
+    margin: auto;
+    text-align: center
   }
 </style>

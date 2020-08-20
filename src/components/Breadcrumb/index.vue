@@ -10,8 +10,7 @@
 </template>
 
 <script>
-import pathToRegexp from 'path-to-regexp'
-
+const { compile } = require('path-to-regexp')
 export default {
   data() {
     return {
@@ -32,12 +31,11 @@ export default {
   },
   methods: {
     getBreadcrumb() {
-      // only show routes with meta.title
       let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
       const first = matched[0]
 
       if (!this.isDashboard(first)) {
-        matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }}].concat(matched)
+        matched = [{ path: '/dashboard', meta: { title: '控制面板', breadcrumb: false }}].concat(matched)
       }
 
       this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
@@ -50,9 +48,8 @@ export default {
       return name.trim().toLocaleLowerCase() === 'Dashboard'.toLocaleLowerCase()
     },
     pathCompile(path) {
-      // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
       const { params } = this.$route
-      var toPath = pathToRegexp.compile(path)
+      var toPath = compile(path)
       return toPath(params)
     },
     handleLink(item) {
@@ -68,15 +65,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-breadcrumb.el-breadcrumb {
-  display: inline-block;
-  font-size: 14px;
-  line-height: 50px;
-  margin-left: 8px;
+  .app-breadcrumb.el-breadcrumb {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 50px;
+    margin-left: 8px;
 
-  .no-redirect {
-    color: #97a8be;
-    cursor: text;
+    .no-redirect {
+      color: #97a8be;
+      cursor: text;
+    }
   }
-}
 </style>
