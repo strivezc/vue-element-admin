@@ -20,7 +20,7 @@
 export default {
   name: 'DashBoard',
   data() {
-    return {}
+    return {};
   }
-}
+};
 </script>
