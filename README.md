@@ -63,6 +63,7 @@ npm run lint -- --fix
     	    |- permission.js：权限检查
     	    |- request.js：axios 请求封装
     	    |- index.js：工具方法
+    	    |- http.js：模块化http请求
     	|- views：页面
     	|- permission.js：登录认证和路由跳转
     	|- main.js：全局入口文件
